@@ -89,29 +89,99 @@
   "task-4": {
     "implementation": [
       {
-        "How_is_it_connected_to_implementation": "Displays each task and provides a button to toggle its status between Completed and Pending. Calls the onToggleComplete handler when the button is clicked.",
-        "change_type": "new",
+        "How_is_it_connected_to_implementation": "Displays each task and provides a button to toggle its status between Completed and Pending. Calls the onToggleComplete handler when the button is clicked. Visually reflects the current state with line-through and faded card for completed tasks.",
+        "change_type": "unchanged",
         "file_path": "frontend/src/components/TaskItem.tsx",
         "id": "component_taskitem_toggle_status",
         "name": "TaskItem",
-        "pseudo_code": "For each task:\n  Render task details\n  Render a button labeled 'Done' if not completed, 'Undo' if completed\n  When button is clicked:\n    Call onToggleComplete(task)\n  Visually indicate status:\n    If completed, show line-through and faded card",
+        "pseudo_code": "FOR each task:\n  Render task details\n  Render a button labeled 'Done' if not completed, 'Undo' if completed\n  WHEN button is clicked:\n    CALL onToggleComplete(task)\n  IF task.completed:\n    Show line-through and faded card",
         "type": "component"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Implements the handleToggleComplete function, which updates the task's completed status by calling the API and reloads the task list. Passes this handler to TaskItem for toggling.",
+        "change_type": "new",
+        "file_path": "frontend/src/App.tsx",
+        "id": "component_app_handle_toggle",
+        "name": "App",
+        "pseudo_code": "DEFINE handleToggleComplete(task):\n  CALL api.updateTask(task.id, {...task, completed: !task.completed})\n  CALL loadTasks() to refresh UI\nPASS handleToggleComplete to TaskItem",
+        "type": "component"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Sends a PUT request to the backend to update the task's completed status. Used by App's handleToggleComplete.",
+        "change_type": "new",
+        "file_path": "frontend/src/api.ts",
+        "id": "function_api_update_task",
+        "name": "api.updateTask",
+        "pseudo_code": "FUNCTION updateTask(id, task):\n  SEND PUT request to /tasks/{id} with updated task data\n  RETURN updated task",
+        "type": "function"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Defines the /tasks/{task_id} PUT endpoint, which updates a task's status in the backend using the database module.",
+        "change_type": "new",
+        "file_path": "backend/main.py",
+        "id": "endpoint_backend_update_task",
+        "name": "update_task",
+        "pseudo_code": "ENDPOINT PUT /tasks/{task_id}:\n  CALL database.update_task(task_id, task)\n  IF updated_task is None:\n    RAISE 404 error\n  RETURN updated_task",
+        "type": "endpoint"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Updates the task's completed status in persistent storage. Called by the backend endpoint.",
+        "change_type": "new",
+        "file_path": "backend/database.py",
+        "id": "function_database_update_task",
+        "name": "update_task",
+        "pseudo_code": "FUNCTION update_task(task_id, task_update):\n  FOR each task in tasks:\n    IF task.id == task_id:\n      updated_task = Task(id=task_id, **task_update)\n      REPLACE task with updated_task\n      SAVE tasks\n      RETURN updated_task\n  RETURN None",
+        "type": "function"
       }
     ],
-    "missing_implementations": [
-      "No missing conditions detected. All functional requirements for toggling and visually reflecting Completed/Pending status are implemented."
-    ]
+    "missing_implementations": []
   },
   "task-1": {
     "implementation": [
       {
         "How_is_it_connected_to_implementation": "Provides the user interface for submitting a new task, requiring input for title, description, priority, due date, and tag (called 'category' in code). Ensures the title is required in the form, and collects all other attributes for submission.",
-        "change_type": "new",
+        "change_type": "unchanged",
         "file_path": "frontend/src/components/TaskForm.tsx",
         "id": "component_TaskForm",
         "name": "TaskForm",
-        "pseudo_code": "Display a form with fields: title (required), description, priority, category, due date\nOn submit:\n    Collect values from all fields\n    Call onSubmit with the collected data\n",
+        "pseudo_code": "Display a form with fields: title (required), description, priority, category, due date\nOn submit:\n    Collect values from all fields\n    Call onSubmit with the collected data",
         "type": "component"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Handles the submission of new task data from TaskForm, calls the API to create the task, and reloads the task list.",
+        "change_type": "new",
+        "file_path": "frontend/src/App.tsx",
+        "id": "function_handleCreateTask",
+        "name": "handleCreateTask",
+        "pseudo_code": "On TaskForm submit:\n    Call api.createTask(taskData)\n    Reload tasks\n    Close the form",
+        "type": "function"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Sends a POST request to the backend /tasks endpoint with all task attributes (title, description, priority, category, due_date, completed) for creation.",
+        "change_type": "new",
+        "file_path": "frontend/src/api.ts",
+        "id": "function_createTask_api",
+        "name": "api.createTask",
+        "pseudo_code": "Send POST request to /tasks with task data\nIf response is OK:\n    Return created task\nElse:\n    Throw error",
+        "type": "function"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Receives task creation requests, passes the TaskCreate object to the database layer for storage.",
+        "change_type": "new",
+        "file_path": "backend/main.py",
+        "id": "endpoint_create_task",
+        "name": "POST /tasks",
+        "pseudo_code": "On POST /tasks:\n    Receive TaskCreate object\n    Call database.add_task(task)\n    Return created task",
+        "type": "endpoint"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Adds the new task to the persistent storage, using all provided attributes from TaskCreate.",
+        "change_type": "new",
+        "file_path": "backend/database.py",
+        "id": "function_add_task_db",
+        "name": "add_task",
+        "pseudo_code": "Get current tasks\nCreate new Task object with provided attributes\nAppend to tasks list\nSave tasks\nReturn new task",
+        "type": "function"
       }
     ],
     "missing_implementations": [
@@ -139,12 +209,48 @@
     "implementation": [
       {
         "How_is_it_connected_to_implementation": "UI component that provides the Delete button for each task. When clicked and confirmed, it calls the parent onDelete handler with the task ID.",
-        "change_type": "new",
+        "change_type": "unchanged",
         "file_path": "frontend/src/components/TaskItem.tsx",
         "id": "frontend-taskitem-delete-handler",
         "name": "TaskItem.handleDelete",
         "pseudo_code": "When user clicks 'Delete' button:\n    Show confirmation dialog\n    If confirmed:\n        Call onDelete(task.id)",
         "type": "component"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Handles the deletion logic in the main app. Receives the task ID from TaskItem, calls the API to delete the task, and updates the local state to remove the task from the list.",
+        "change_type": "new",
+        "file_path": "frontend/src/App.tsx",
+        "id": "frontend-app-delete-task-handler",
+        "name": "App.handleDeleteTask",
+        "pseudo_code": "When onDelete(task.id) is called from TaskItem:\n    Call api.deleteTask(id)\n    If successful:\n        Remove task from local state\n    Else:\n        Show error message",
+        "type": "function"
+      },
+      {
+        "How_is_it_connected_to_implementation": "API utility function that sends a DELETE request to the backend to remove the task with the given ID.",
+        "change_type": "new",
+        "file_path": "frontend/src/api.ts",
+        "id": "frontend-api-delete-task",
+        "name": "api.deleteTask",
+        "pseudo_code": "deleteTask(id):\n    Send HTTP DELETE request to /tasks/{id}\n    If response not OK:\n        Throw error",
+        "type": "function"
+      },
+      {
+        "How_is_it_connected_to_implementation": "FastAPI endpoint that receives DELETE requests for a task ID, calls the database delete function, and returns success or error.",
+        "change_type": "new",
+        "file_path": "backend/main.py",
+        "id": "backend-endpoint-delete-task",
+        "name": "DELETE /tasks/{task_id}",
+        "pseudo_code": "On DELETE /tasks/{task_id}:\n    Call database.delete_task(task_id)\n    If not success:\n        Raise 404 error\n    Else:\n        Return success message",
+        "type": "endpoint"
+      },
+      {
+        "How_is_it_connected_to_implementation": "Database function that removes the task with the given ID from the persistent store (tasks.json). Returns True if deleted, False if not found.",
+        "change_type": "new",
+        "file_path": "backend/database.py",
+        "id": "backend-database-delete-task",
+        "name": "database.delete_task",
+        "pseudo_code": "delete_task(task_id):\n    Load all tasks\n    Remove task with matching ID\n    Save updated task list\n    Return True if a task was deleted, else False",
+        "type": "function"
       }
     ],
     "missing_implementations": []
