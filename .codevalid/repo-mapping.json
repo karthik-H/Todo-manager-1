@@ -85,5 +85,68 @@
     "missing_implementations": [
       "When adding a new task, the following attributes must be provided: Tag."
     ]
+  },
+  "task-4": {
+    "implementation": [
+      {
+        "How_is_it_connected_to_implementation": "Displays each task and provides a button to toggle its status between Completed and Pending. Calls the onToggleComplete handler when the button is clicked.",
+        "change_type": "new",
+        "file_path": "frontend/src/components/TaskItem.tsx",
+        "id": "component_taskitem_toggle_status",
+        "name": "TaskItem",
+        "pseudo_code": "For each task:\n  Render task details\n  Render a button labeled 'Done' if not completed, 'Undo' if completed\n  When button is clicked:\n    Call onToggleComplete(task)\n  Visually indicate status:\n    If completed, show line-through and faded card",
+        "type": "component"
+      }
+    ],
+    "missing_implementations": [
+      "No missing conditions detected. All functional requirements for toggling and visually reflecting Completed/Pending status are implemented."
+    ]
+  },
+  "task-1": {
+    "implementation": [
+      {
+        "How_is_it_connected_to_implementation": "Provides the user interface for submitting a new task, requiring input for title, description, priority, due date, and tag (called 'category' in code). Ensures the title is required in the form, and collects all other attributes for submission.",
+        "change_type": "new",
+        "file_path": "frontend/src/components/TaskForm.tsx",
+        "id": "component_TaskForm",
+        "name": "TaskForm",
+        "pseudo_code": "Display a form with fields: title (required), description, priority, category, due date\nOn submit:\n    Collect values from all fields\n    Call onSubmit with the collected data\n",
+        "type": "component"
+      }
+    ],
+    "missing_implementations": [
+      "Validation for all required attributes (title, description, priority, due date, tag/category) is not enforced in backend; only 'title' is required by frontend form and backend model, but others are optional.",
+      "If any required attribute except 'title' is missing, the backend does not reject the creation request.",
+      "Backend does not validate that all specified fields are present before storing the task.",
+      "The attribute 'tag' is referred to as 'category' in code, but the requirement uses 'tag'; this mapping is not explicitly documented or enforced."
+    ]
+  },
+  "task-2": {
+    "implementation": [
+      {
+        "How_is_it_connected_to_implementation": "Displays each task with an 'Edit' button. When clicked, calls the parent onEdit handler with the selected task, enabling the user to select a task for editing.",
+        "change_type": "new",
+        "file_path": "frontend/src/components/TaskItem.tsx",
+        "id": "frontend-taskitem-edit-button",
+        "name": "TaskItem",
+        "pseudo_code": "For each task displayed:\n    Show 'Edit' button\n    On 'Edit' button click:\n        Call onEdit(task)",
+        "type": "component"
+      }
+    ],
+    "missing_implementations": []
+  },
+  "task-3": {
+    "implementation": [
+      {
+        "How_is_it_connected_to_implementation": "UI component that provides the Delete button for each task. When clicked and confirmed, it calls the parent onDelete handler with the task ID.",
+        "change_type": "new",
+        "file_path": "frontend/src/components/TaskItem.tsx",
+        "id": "frontend-taskitem-delete-handler",
+        "name": "TaskItem.handleDelete",
+        "pseudo_code": "When user clicks 'Delete' button:\n    Show confirmation dialog\n    If confirmed:\n        Call onDelete(task.id)",
+        "type": "component"
+      }
+    ],
+    "missing_implementations": []
   }
 }
