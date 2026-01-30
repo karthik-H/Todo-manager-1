@@ -1139,7 +1139,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-4/component_taskitem_toggle_status.ts"
     },
     {
       "implementation_id": "component_TaskForm",
@@ -1336,7 +1337,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-1/component_TaskForm.ts"
     },
     {
       "implementation_id": "frontend-taskitem-edit-button",
@@ -1461,7 +1463,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-2/frontend-taskitem-edit-button.ts"
     },
     {
       "implementation_id": "frontend-taskitem-delete-handler",
@@ -1586,7 +1589,8 @@
           },
           "type": "negative"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-3/frontend-taskitem-delete-handler.ts"
     }
   ],
   "endpoint": [
