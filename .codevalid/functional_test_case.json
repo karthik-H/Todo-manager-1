@@ -1015,6 +1015,578 @@
           "implementation_id": "frontend-taskitem-component"
         }
       ]
+    },
+    {
+      "implementation_id": "component_taskitem_toggle_status",
+      "test_cases": [
+        {
+          "description": "Should render a task that is not completed with proper details and a 'Done' button.",
+          "id": "render_pending_task_default",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Render Pending Task - Default State",
+          "test_setup": {
+            "given": "TaskItem receives a task object with completed: false and a mock onToggleComplete function.",
+            "then": "Task details are displayed, the button is labeled 'Done', and no line-through or faded styling is applied.",
+            "when": "Component is rendered."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Should render a completed task with line-through text and faded card effect. The button label should be 'Undo'.",
+          "id": "render_completed_task_visuals",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Render Completed Task - Visual Indication",
+          "test_setup": {
+            "given": "TaskItem receives a task object with completed: true and a mock onToggleComplete function.",
+            "then": "Task details are displayed with line-through and faded styling, and the button is labeled 'Undo'.",
+            "when": "Component is rendered."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Should call onToggleComplete with the correct task when the 'Done' button is clicked.",
+          "id": "toggle_pending_task_to_complete",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Toggle Pending Task to Complete",
+          "test_setup": {
+            "given": "TaskItem receives a pending task and a mock onToggleComplete function.",
+            "then": "onToggleComplete is called once with the task as the argument.",
+            "when": "User clicks the 'Done' button."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Should call onToggleComplete with the correct task when the 'Undo' button is clicked.",
+          "id": "toggle_completed_task_to_pending",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Toggle Completed Task to Pending",
+          "test_setup": {
+            "given": "TaskItem receives a completed task and a mock onToggleComplete function.",
+            "then": "onToggleComplete is called once with the task as the argument.",
+            "when": "User clicks the 'Undo' button."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Should handle the case when the task prop is undefined or null and not crash.",
+          "id": "no_task_prop_provided",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "No Task Prop Provided",
+          "test_setup": {
+            "given": "TaskItem is rendered with task prop as null or undefined.",
+            "then": "Component does not throw and handles the error gracefully (e.g., shows nothing or an error message).",
+            "when": "Component is rendered."
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Should not throw an error if onToggleComplete prop is missing and the button is clicked.",
+          "id": "no_onToggleComplete_handler",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "No onToggleComplete Handler Provided",
+          "test_setup": {
+            "given": "TaskItem is rendered with a valid task but without onToggleComplete prop.",
+            "then": "Component does not throw and no action is performed.",
+            "when": "User clicks the toggle button."
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Should render tasks with very long titles or details without breaking UI.",
+          "id": "task_with_long_text",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Task With Long Text Details",
+          "test_setup": {
+            "given": "TaskItem receives a task with a long title and description.",
+            "then": "Full text is visible, styled correctly, and no overflow or layout issues occur.",
+            "when": "Component is rendered."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Should call onToggleComplete each time the button is clicked, regardless of the current state.",
+          "id": "multiple_toggle_clicks",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Multiple Toggle Button Clicks",
+          "test_setup": {
+            "given": "TaskItem receives a task and a mock onToggleComplete.",
+            "then": "onToggleComplete is called the same number of times as clicks, always with the task as argument.",
+            "when": "User clicks the toggle button multiple times."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "If the component supports disabling the toggle button, then clicking should not call onToggleComplete.",
+          "id": "button_disabled_prop",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Button Disabled Prop (If Supported)",
+          "test_setup": {
+            "given": "TaskItem receives a task, a mock onToggleComplete, and the toggle button is disabled.",
+            "then": "onToggleComplete is not called and button appears disabled.",
+            "when": "User attempts to click the toggle button."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Should handle tasks with custom id fields (e.g., null, undefined, or objects) without crashing.",
+          "id": "custom_task_id_types",
+          "implementation_id": "component_taskitem_toggle_status",
+          "name": "Task With Non-String Non-Numeric ID",
+          "test_setup": {
+            "given": "TaskItem receives a task with id as null, undefined, or an object.",
+            "then": "Component does not crash and renders as expected (or with a fallback if needed).",
+            "when": "Component is rendered."
+          },
+          "type": "edge"
+        }
+      ]
+    },
+    {
+      "implementation_id": "component_TaskForm",
+      "test_cases": [
+        {
+          "description": "Verify the form renders the title, description, priority, category, and due date fields.",
+          "id": "TC1_render_form_fields",
+          "implementation_id": "component_TaskForm",
+          "name": "Render all form fields",
+          "test_setup": {
+            "given": "TaskForm is rendered",
+            "then": "All input fields (title, description, priority, category, due date) are visible to the user",
+            "when": "Component mounts"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Check if submitting the form with all valid fields calls onSubmit with correct data.",
+          "id": "TC2_submit_valid_form",
+          "implementation_id": "component_TaskForm",
+          "name": "Submit form with valid data",
+          "test_setup": {
+            "given": "All fields are filled with valid data",
+            "then": "onSubmit is called with the collected data for all fields",
+            "when": "User submits the form"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Ensure that submitting the form without a title shows a validation error and does not call onSubmit.",
+          "id": "TC3_title_required_validation",
+          "implementation_id": "component_TaskForm",
+          "name": "Title required validation",
+          "test_setup": {
+            "given": "Description, priority, category, and due date are filled, but title is empty",
+            "then": "Form displays a validation error for the title and onSubmit is NOT called",
+            "when": "User submits the form"
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Verify that the form can be submitted with only the required title field and all optional fields left empty.",
+          "id": "TC4_empty_optional_fields",
+          "implementation_id": "component_TaskForm",
+          "name": "Submit form with only required field",
+          "test_setup": {
+            "given": "Only the title field is filled, all other fields are left empty",
+            "then": "onSubmit is called with title set and other fields as empty/null/undefined as per implementation",
+            "when": "User submits the form"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Check that the priority field displays all expected options (e.g., Low, Medium, High).",
+          "id": "TC5_priority_field_options",
+          "implementation_id": "component_TaskForm",
+          "name": "Priority field options",
+          "test_setup": {
+            "given": "TaskForm is rendered",
+            "then": "Priority field shows all available priority options",
+            "when": "User views the priority dropdown"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Check that the category (tag) field displays all expected options.",
+          "id": "TC6_category_field_options",
+          "implementation_id": "component_TaskForm",
+          "name": "Category field options",
+          "test_setup": {
+            "given": "TaskForm is rendered",
+            "then": "Category field shows all available category options",
+            "when": "User views the category dropdown"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Ensure that entering a due date in the past is either allowed or triggers a validation error, based on requirements.",
+          "id": "TC7_due_date_in_past",
+          "implementation_id": "component_TaskForm",
+          "name": "Due date in the past",
+          "test_setup": {
+            "given": "All fields are filled with valid data except due date is set to a past date",
+            "then": "Form either submits successfully or displays a validation error for due date (as per implementation)",
+            "when": "User submits the form"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Verify behavior when the description field is filled to its maximum allowed length.",
+          "id": "TC8_description_max_length",
+          "implementation_id": "component_TaskForm",
+          "name": "Description maximum length",
+          "test_setup": {
+            "given": "Description field is filled with a string at the maximum allowed length",
+            "then": "Form submits successfully and onSubmit is called with the long description",
+            "when": "User submits the form"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Verify behavior when the title field is filled to its maximum allowed length.",
+          "id": "TC9_title_max_length",
+          "implementation_id": "component_TaskForm",
+          "name": "Title maximum length",
+          "test_setup": {
+            "given": "Title field is filled with a string at the maximum allowed length",
+            "then": "Form submits successfully and onSubmit is called with the long title",
+            "when": "User submits the form"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Check if the form fields are cleared after a successful submission.",
+          "id": "TC10_reset_form_after_submit",
+          "implementation_id": "component_TaskForm",
+          "name": "Reset form after successful submit",
+          "test_setup": {
+            "given": "All fields are filled and form is submitted successfully",
+            "then": "All form fields are reset to their initial (empty) state",
+            "when": "onSubmit is called"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Check if a cancel button (if present) resets or closes the form properly.",
+          "id": "TC11_cancel_form",
+          "implementation_id": "component_TaskForm",
+          "name": "Cancel form action",
+          "test_setup": {
+            "given": "User has entered data into the form",
+            "then": "Form is reset or closed and no data is submitted",
+            "when": "User clicks the cancel button (if available)"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Test that entering or selecting an invalid value for priority does not allow form submission.",
+          "id": "TC12_invalid_priority_value",
+          "implementation_id": "component_TaskForm",
+          "name": "Invalid priority value",
+          "test_setup": {
+            "given": "Priority field is set to an invalid or unsupported value",
+            "then": "Form displays a validation error and onSubmit is NOT called",
+            "when": "User submits the form"
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Test that entering or selecting an invalid value for category does not allow form submission.",
+          "id": "TC13_invalid_category_value",
+          "implementation_id": "component_TaskForm",
+          "name": "Invalid category value",
+          "test_setup": {
+            "given": "Category field is set to an invalid or unsupported value",
+            "then": "Form displays a validation error and onSubmit is NOT called",
+            "when": "User submits the form"
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Ensure that entering an invalid due date format shows an error and does not call onSubmit.",
+          "id": "TC14_due_date_format_validation",
+          "implementation_id": "component_TaskForm",
+          "name": "Invalid due date format",
+          "test_setup": {
+            "given": "Due date field is filled with an invalid date string",
+            "then": "Form displays a validation error for due date and onSubmit is NOT called",
+            "when": "User submits the form"
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Test that submitting the form multiple times rapidly results in only one submission or proper handling.",
+          "id": "TC15_multiple_submissions",
+          "implementation_id": "component_TaskForm",
+          "name": "Multiple rapid submissions",
+          "test_setup": {
+            "given": "User fills out the form correctly",
+            "then": "onSubmit is called only once or form handles multiple submissions gracefully",
+            "when": "User clicks the submit button multiple times quickly"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Ensure that after a validation error (e.g., missing title), all entered field values are preserved except the error field.",
+          "id": "TC16_preserve_state_on_error",
+          "implementation_id": "component_TaskForm",
+          "name": "Preserve field values after validation error",
+          "test_setup": {
+            "given": "User fills out all fields except title, then submits",
+            "then": "Form retains all entered values in other fields",
+            "when": "Validation error is triggered for missing title"
+          },
+          "type": "edge"
+        }
+      ]
+    },
+    {
+      "implementation_id": "frontend-taskitem-edit-button",
+      "test_cases": [
+        {
+          "description": "Checks if the TaskItem component renders the task's information and the 'Edit' button.",
+          "id": "taskitem_renders_task_and_edit_button",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Renders Task and Edit Button",
+          "test_setup": {
+            "given": "A valid task object is passed as prop to TaskItem with a valid onEdit handler.",
+            "then": "The task's information and the 'Edit' button should be visible in the output.",
+            "when": "The component is rendered."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Ensures that clicking the 'Edit' button calls the onEdit function with the correct task object.",
+          "id": "taskitem_edit_button_calls_onedit_with_task",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Edit Button Calls onEdit with Task",
+          "test_setup": {
+            "given": "A valid task object is passed as prop to TaskItem with a mock onEdit handler.",
+            "then": "The mock onEdit handler should be called once with the provided task as an argument.",
+            "when": "The user clicks on the 'Edit' button."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Verifies that the 'Edit' button is not rendered if the onEdit handler is not provided.",
+          "id": "taskitem_edit_button_not_rendered_without_onedit",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Edit Button Not Rendered Without onEdit",
+          "test_setup": {
+            "given": "A task object is passed as prop to TaskItem without the onEdit handler.",
+            "then": "The 'Edit' button should not be present in the output.",
+            "when": "The component is rendered."
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Checks that the component does not crash and handles gracefully when a null or undefined task is passed.",
+          "id": "taskitem_handles_null_task_prop_gracefully",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Handles Null Task Prop Gracefully",
+          "test_setup": {
+            "given": "A null or undefined task is passed as prop to TaskItem along with a valid onEdit handler.",
+            "then": "The component should not throw errors and should not render the task details or 'Edit' button.",
+            "when": "The component is rendered."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Ensures the onEdit handler is called every time the 'Edit' button is clicked.",
+          "id": "taskitem_multiple_edits_calls_onedit_each_time",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Multiple Edit Clicks Call onEdit Each Time",
+          "test_setup": {
+            "given": "A valid task object is passed as prop to TaskItem with a mock onEdit handler.",
+            "then": "The onEdit handler should be called the same number of times as the button was clicked, each time with the correct task.",
+            "when": "The user clicks the 'Edit' button multiple times."
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Checks that the 'Edit' button is disabled if a 'disabled' prop is passed.",
+          "id": "taskitem_edit_button_disabled_state",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Edit Button Disabled State",
+          "test_setup": {
+            "given": "A task object and a 'disabled' prop set to true are passed to TaskItem with a valid onEdit handler.",
+            "then": "The 'Edit' button should be disabled and clicking it should not call the onEdit handler.",
+            "when": "The component is rendered."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Ensures the component does not crash if the onEdit handler throws an error.",
+          "id": "taskitem_onedit_error_handling",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "onEdit Error Handling",
+          "test_setup": {
+            "given": "A valid task object is passed as prop to TaskItem with an onEdit handler that throws an error.",
+            "then": "The component should not crash and error boundaries (if any) should handle the error.",
+            "when": "The user clicks the 'Edit' button."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Checks that the 'Edit' button is not shown for a completed task if such logic is implemented.",
+          "id": "taskitem_no_edit_button_for_completed_task",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "No Edit Button For Completed Task",
+          "test_setup": {
+            "given": "A completed task object is passed as prop to TaskItem with a valid onEdit handler and component logic hides edit for completed tasks.",
+            "then": "The 'Edit' button should not be rendered.",
+            "when": "The component is rendered."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Verifies that the component renders without error when only the minimal required task fields are present.",
+          "id": "taskitem_render_with_minimal_task_data",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Render With Minimal Task Data",
+          "test_setup": {
+            "given": "A task object with only the minimal required fields is passed to TaskItem with a valid onEdit handler.",
+            "then": "The component should render the task and 'Edit' button without errors.",
+            "when": "The component is rendered."
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Ensures that extra, unexpected fields in the task object do not affect component rendering or behavior.",
+          "id": "taskitem_handles_extra_unexpected_task_fields",
+          "implementation_id": "frontend-taskitem-edit-button",
+          "name": "Handles Extra Unexpected Task Fields",
+          "test_setup": {
+            "given": "A task object with extra, unexpected fields is passed to TaskItem with a valid onEdit handler.",
+            "then": "The component should render normally and onEdit should be called with the entire task object including extra fields.",
+            "when": "The component is rendered and 'Edit' is clicked."
+          },
+          "type": "edge"
+        }
+      ]
+    },
+    {
+      "implementation_id": "frontend-taskitem-delete-handler",
+      "test_cases": [
+        {
+          "description": "Verifies that clicking the Delete button and confirming the dialog calls the onDelete handler with the correct task ID.",
+          "id": "TC01_delete_confirmed_handler_called",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Delete confirmed calls onDelete with correct ID",
+          "test_setup": {
+            "given": "TaskItem rendered with task.id = 42 and a mock onDelete handler",
+            "then": "onDelete is called once with argument 42",
+            "when": "User clicks 'Delete' and confirms the dialog"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Ensures that cancelling the confirmation dialog prevents the onDelete handler from being called.",
+          "id": "TC02_delete_cancelled_handler_not_called",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Delete cancelled does not call onDelete",
+          "test_setup": {
+            "given": "TaskItem rendered with a mock onDelete handler",
+            "then": "onDelete is not called",
+            "when": "User clicks 'Delete' and cancels the confirmation dialog"
+          },
+          "type": "negative"
+        },
+        {
+          "description": "Checks that the Delete button is rendered for a given task.",
+          "id": "TC03_render_delete_button",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Delete button is rendered",
+          "test_setup": {
+            "given": "TaskItem rendered with any valid props",
+            "then": "Delete button is present in the DOM",
+            "when": "Component is mounted"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Ensures that rapid multiple clicks on Delete do not trigger multiple onDelete calls unless confirmed each time.",
+          "id": "TC04_multiple_clicks_only_one_call",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Multiple clicks only trigger handler once per confirmation",
+          "test_setup": {
+            "given": "TaskItem rendered with a mock onDelete handler",
+            "then": "onDelete is called once",
+            "when": "User rapidly clicks 'Delete'; only confirms the dialog once"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Checks that the component does not crash or throw if the onDelete prop is not provided.",
+          "id": "TC05_no_onDelete_prop",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Handles missing onDelete handler gracefully",
+          "test_setup": {
+            "given": "TaskItem rendered without onDelete prop",
+            "then": "No error is thrown; UI remains responsive",
+            "when": "User clicks 'Delete' and confirms the dialog"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Ensures that if task.id is undefined or null, the onDelete handler is called with the invalid value.",
+          "id": "TC06_invalid_task_id",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Handles invalid task ID",
+          "test_setup": {
+            "given": "TaskItem rendered with task.id = null and a mock onDelete handler",
+            "then": "onDelete is called once with argument null",
+            "when": "User clicks 'Delete' and confirms the dialog"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Verifies that clicking the Delete button brings up a confirmation dialog.",
+          "id": "TC07_confirmation_dialog_appears",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Confirmation dialog appears on Delete",
+          "test_setup": {
+            "given": "TaskItem rendered with any valid props",
+            "then": "Confirmation dialog is displayed",
+            "when": "User clicks 'Delete'"
+          },
+          "type": "positive"
+        },
+        {
+          "description": "Checks that the Delete button is disabled if a loading state is passed as a prop.",
+          "id": "TC08_delete_button_disabled_state",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Delete button is disabled when loading",
+          "test_setup": {
+            "given": "TaskItem rendered with a loading prop set to true",
+            "then": "Delete button is disabled",
+            "when": "Component is mounted"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Ensures that the Delete button has appropriate accessibility attributes (aria-label, role, etc.) for screen readers.",
+          "id": "TC09_delete_button_accessibility",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Delete button is accessible",
+          "test_setup": {
+            "given": "TaskItem rendered with a task",
+            "then": "Delete button has aria-label='Delete Task' or similar accessibility attribute",
+            "when": "Component is mounted"
+          },
+          "type": "edge"
+        },
+        {
+          "description": "Checks that the Delete button is not rendered if the user does not have delete permissions (if such a prop exists).",
+          "id": "TC10_delete_button_not_rendered_for_unauthorized",
+          "implementation_id": "frontend-taskitem-delete-handler",
+          "name": "Delete button not rendered for unauthorized user",
+          "test_setup": {
+            "given": "TaskItem rendered with canDelete = false",
+            "then": "Delete button is not present in the DOM",
+            "when": "Component is mounted"
+          },
+          "type": "negative"
+        }
+      ]
     }
   ],
   "endpoint": [
