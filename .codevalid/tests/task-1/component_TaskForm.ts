@@ -5,9 +5,9 @@ import TaskForm from '../../../frontend/src/components/TaskForm';
 
 describe('TaskForm', () => {
   const priorityOptions = ['Low', 'Medium', 'High'];
-  const categoryOptions = ['Work', 'Personal', 'Other']; // Adjust as per actual implementation
-  const maxTitleLength = 100; // Adjust as per actual implementation
-  const maxDescriptionLength = 500; // Adjust as per actual implementation
+  const categoryOptions = ['Work', 'Personal', 'Other'];
+  const maxTitleLength = 100;
+  const maxDescriptionLength = 500;
 
   function setup(props: any = {}) {
     const onSubmit = jest.fn();
@@ -80,7 +80,6 @@ describe('TaskForm', () => {
 
   test('Priority field options', () => {
     setup();
-    const prioritySelect = screen.getByLabelText(/priority/i);
     priorityOptions.forEach(option => {
       expect(screen.getByRole('option', { name: option })).toBeInTheDocument();
     });
@@ -98,7 +97,6 @@ describe('TaskForm', () => {
     fireEvent.change(screen.getByLabelText(/title/i), { target: { value: 'Past Due' } });
     fireEvent.change(screen.getByLabelText(/due date/i), { target: { value: '2000-01-01' } });
     fireEvent.click(screen.getByRole('button', { name: /submit/i }));
-    // Adjust assertion based on implementation: allow or error
     await waitFor(() => {
       // If allowed:
       // expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({ dueDate: '2000-01-01' }));

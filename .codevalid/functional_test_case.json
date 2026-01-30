@@ -546,7 +546,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-1/function_handleCreateTask.ts"
     },
     {
       "implementation_id": "function_createTask_api",
@@ -982,7 +983,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-1/function_createTask_api.ts"
     },
     {
       "implementation_id": "function_add_task_db",
@@ -1273,7 +1275,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-1/function_add_task_db.py"
     },
     {
       "implementation_id": "frontend-app-delete-task-handler",
@@ -1374,7 +1377,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-3/frontend-app-delete-task-handler.ts"
     },
     {
       "implementation_id": "frontend-api-delete-task",
@@ -1499,7 +1503,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-3/frontend-api-delete-task.ts"
     },
     {
       "implementation_id": "backend-database-delete-task",
@@ -1624,7 +1629,8 @@
           },
           "type": "negative"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-3/backend-database-delete-task.py"
     },
     {
       "implementation_id": "function_api_update_task",
@@ -1912,7 +1918,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-4/function_api_update_task.ts"
     },
     {
       "implementation_id": "function_database_update_task",
@@ -2037,7 +2044,8 @@
           },
           "type": "positive"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-4/function_database_update_task.py"
     }
   ],
   "component": [
@@ -3295,7 +3303,8 @@
           },
           "type": "edge"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-4/component_app_handle_toggle.ts"
     }
   ],
   "endpoint": [
@@ -4759,7 +4768,8 @@
           },
           "type": "negative"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-1/endpoint_create_task.py"
     },
     {
       "implementation_id": "backend-endpoint-delete-task",
@@ -4964,7 +4974,8 @@
           },
           "type": "negative"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-3/backend-endpoint-delete-task.py"
     },
     {
       "implementation_id": "endpoint_backend_update_task",
@@ -5185,7 +5196,8 @@
           },
           "type": "negative"
         }
-      ]
+      ],
+      "test_path": ".codevalid/tests/task-4/endpoint_backend_update_task.py"
     }
   ]
 }
