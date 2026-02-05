@@ -15,11 +15,14 @@ class Category(str, Enum):
 
 class TaskBase(BaseModel):
     title: str
-    description: Optional[str] = None
-    priority: Priority = Priority.medium
-    category: Optional[Category] = None
-    due_date: Optional[date] = None
+    description: str
+    priority: Priority
+    category: Category
+    due_date: date
     completed: bool = False
+
+    class Config:
+        orm_mode = True
 
 class TaskCreate(TaskBase):
     pass
