@@ -6,14 +6,11 @@ import database
 
 app = FastAPI(title="Personal To-Do Manager API")
 
-origins = [
-    "http://localhost:5173", # Vite default
-    "http://127.0.0.1:5173",
-]
+from config import settings
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,6 +22,9 @@ async def read_tasks():
 
 @app.post("/tasks", response_model=Task)
 async def create_task(task: TaskCreate):
+    # Validate all required fields
+    if not task.title or not task.description or not task.priority or not task.category or not task.due_date:
+        raise HTTPException(status_code=400, detail="All fields (title, description, priority, due date, tag) are required.")
     return database.add_task(task)
 
 @app.put("/tasks/{task_id}", response_model=Task)

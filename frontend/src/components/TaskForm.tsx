@@ -16,12 +16,33 @@ export const TaskForm: React.FC<TaskFormProps> = ({ initialTask, onSubmit, onCan
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        // Validation: all fields required
+        if (!title.trim()) {
+            alert('Title is required.');
+            return;
+        }
+        if (!description.trim()) {
+            alert('Description is required.');
+            return;
+        }
+        if (!priority) {
+            alert('Priority is required.');
+            return;
+        }
+        if (!category) {
+            alert('Tag (category) is required.');
+            return;
+        }
+        if (!dueDate) {
+            alert('Due date is required.');
+            return;
+        }
         await onSubmit({
             title,
-            description: description || undefined,
+            description,
             priority,
-            category: category === '' ? undefined : category,
-            due_date: dueDate || undefined,
+            category,
+            due_date: dueDate,
             completed: initialTask ? initialTask.completed : false,
         });
     };
